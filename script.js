@@ -1,4 +1,8 @@
 const melody = "CEGEDFAFGEBEAcEc";
+const startDelay = 500;
+const restFrames = 20;
+const noteSpeed = 3;
+
 let keys = [];
 
 const keyLookup = {
@@ -16,7 +20,10 @@ const keyLookup = {
 class Button {
     constructor(elementId) {
         this.btn = document.getElementById(elementId);
+        
         this.notes = [];
+        this.noteIcons = [];
+        
         this.audio = document.getElementById(elementId + "-audio");
         this.lastFrame = false;
         this.thisFrame = false;
@@ -46,40 +53,46 @@ class Button {
     }
     queueNote(framesFromStart) {
         this.notes.push(framesFromStart);
+
+        let noteIcon = document.createElement("div");
+        noteIcon.classList.add("note-icon");
+        noteIcon.classList.add("hidden");
+        
+        this.noteIcons.push(noteIcon);
+        this.btn.appendChild(noteIcon);
     }
     newFrame() {
+        if (this.lastFrame === false && this.thisFrame === true) {
+            this.hit();
+        }
+
+        this.lastFrame = this.thisFrame;
+        
         if (this.notes.length) {
             for (let i = 0; i < this.notes.length; i++) {
                 this.notes[i]--;
-            }
-
-            if (this.lastFrame === false && this.thisFrame === true) {
-                this.hit();
-            }
-            
-            this.lastFrame = this.thisFrame;
-
-            const timing = this.notes[0];
-            let lightness = 0;
-            
-            if (timing > 0 && timing < 100) {
-                lightness = 100 - timing;
-                this.btn.style.borderColor = `hsl(1337, 0%, ${lightness}%)`;
-            }
-            else {
-                this.btn.style.borderColor = "pink";
+                
+                if (this.notes[i] === 100) this.noteIcons[i].classList.remove("hidden");
+                if (this.notes[i] <= 100) this.noteIcons[i].style.top = `${this.notes[i] * noteSpeed}vh`;
             }
             
-            if (timing <= -80) { // do notes automatically get missed if the next is at 0ms? science can't confirm or deny 😔
+            if (this.notes[0] <= -80) { // do notes automatically get missed if the next is at 0ms? science can't confirm or deny 😔
                 this.miss();
             }
         }
     }
+    shiftNotes() {
+        this.notes.shift();
+        this.noteIcons[0].remove();
+        this.noteIcons.shift();
+    }
     miss() {
         console.log("miss");
-        this.notes.shift();
+        this.shiftNotes();
     }
     hit() {
+        if (this.notes.length === 0) console.log("no notes");
+        
         let dontShift = false;
         if (this.notes[0] <= -30) {
             console.log("garbage");
@@ -98,7 +111,7 @@ class Button {
             console.log("none");
         }
         
-        if (dontShift === false) this.notes.shift();
+        if (dontShift === false) this.shiftNotes();
         
         this.audio.currentTime = 0.2;
         this.audio.play(); // this is gonna get a lot more complicated :\
@@ -150,7 +163,7 @@ for (let i = 0; i < melody.length; i++) {
 }
 for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
-    buttons[key].queueNote(i * 100 + 200);
+    buttons[key].queueNote(i * restFrames + startDelay);
 }
 async function main() {
     Object.keys(buttons).forEach(function(e) {
