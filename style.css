@@ -4,3 +4,21 @@ html, body {
     margin: 0;
     background-color: #def;
 }
+#notes > div {
+    display: inline-block;
+    width: 10vmin;
+    height: 10vmin;
+    background-color: #fff;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #000;
+    margin: 10px;
+    padding: 10px;
+}
+#notes > div.note-on {
+    background-color: #000;
+    color: white;
+}
+#f-key {
+    margin-right: calc(10vmin + 14px) !important;
+}

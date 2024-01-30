@@ -16,7 +16,7 @@ const keyLookup = {
 class Button {
     constructor(elementId) {
         this.btn = document.getElementById(elementId);
-        this.notes = [6969];
+        this.notes = [];
         this.audio = document.getElementById(elementId + "-audio");
         this.lastFrame = false;
         this.thisFrame = false;
@@ -27,17 +27,21 @@ class Button {
                 // ooh, idea! what if some enemies had special arrows that were upside down and you had to hit shift to get them?
                 // perhaps those could be sharps
                 // an extra octave also sounds nice, but every button is just a different note, and it magically plays the correct octave if that's coded into the melody
-                // actually, instead of shift (though the idea was to use e.key), maybe it could be space? or you could move up on the home row? but then how would arrows work?
+                // actually, instead of shift (though the idea was bc e.key), maybe it could be space? or you could move up on the home row? but then how would arrow keys work?
                 // this is still a worthwhile idea because then different scales could naturally be different difficulties
                 // wait, no. that would be too many exceptions and make the game way too stupid
                 // each enemy has their own scale, and the notes are adjusted to the scale, but ACCIDENTALS are done with the row above
                 // would that be internally a different button?
 
                 self.thisFrame = true;
+                self.btn.classList.add("note-on");
             }
         });
         window.addEventListener("keyup", function(e) {
-            if (e.code === keyLookup[elementId]) self.thisFrame = false;
+            if (e.code === keyLookup[elementId]) {
+                self.thisFrame = false;
+                self.btn.classList.remove("note-on");
+            }
         });
     }
     queueNote(framesFromStart) {
@@ -54,8 +58,19 @@ class Button {
             }
             
             this.lastFrame = this.thisFrame;
+
+            const timing = this.notes[0];
+            let lightness = 0;
             
-            if (this.notes[0] <= -80) { // do notes automatically get missed if the next is at 0ms?
+            if (timing > 0 && timing < 100) {
+                lightness = 100 - timing;
+                this.btn.style.borderColor = `hsl(1337, 0%, ${lightness}%)`;
+            }
+            else {
+                this.btn.style.borderColor = "pink";
+            }
+            
+            if (timing <= -80) { // do notes automatically get missed if the next is at 0ms? science can't confirm or deny 😔
                 this.miss();
             }
         }
@@ -133,10 +148,10 @@ for (let i = 0; i < melody.length; i++) {
             throw "Invalid note: " + note;
     }
 }
-/*for (let i = 0; i < keys.length; i++) {
+for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
     buttons[key].queueNote(i * 100 + 200);
-}*/
+}
 async function main() {
     Object.keys(buttons).forEach(function(e) {
         buttons[e].newFrame();
