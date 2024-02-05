@@ -1,7 +1,14 @@
-const melody = "CEGEDFAFGEBEAcEc";
-const startDelay = 500;
-const restFrames = 20;
-const noteSpeed = 3;
+const noteSpeed = 2;
+const slowdownMultiplier = 4;
+const startDelay = 0;
+
+const scoreContainer = document.getElementById("score");
+let score = 50;
+
+function changeScore(amount) {
+    score += amount;
+    scoreContainer.innerHTML = score;
+}
 
 let keys = [];
 
@@ -23,23 +30,14 @@ class Button {
         
         this.notes = [];
         this.noteIcons = [];
+        this.notePitches = [];
         
-        this.audio = document.getElementById(elementId + "-audio");
         this.lastFrame = false;
         this.thisFrame = false;
 
         const self = this;
         window.addEventListener("keydown", function(e) {
             if (e.code === keyLookup[elementId]) {
-                // ooh, idea! what if some enemies had special arrows that were upside down and you had to hit shift to get them?
-                // perhaps those could be sharps
-                // an extra octave also sounds nice, but every button is just a different note, and it magically plays the correct octave if that's coded into the melody
-                // actually, instead of shift (though the idea was bc e.key), maybe it could be space? or you could move up on the home row? but then how would arrow keys work?
-                // this is still a worthwhile idea because then different scales could naturally be different difficulties
-                // wait, no. that would be too many exceptions and make the game way too stupid
-                // each enemy has their own scale, and the notes are adjusted to the scale, but ACCIDENTALS are done with the row above
-                // would that be internally a different button?
-
                 self.thisFrame = true;
                 self.btn.classList.add("note-on");
             }
@@ -51,8 +49,9 @@ class Button {
             }
         });
     }
-    queueNote(framesFromStart) {
-        this.notes.push(framesFromStart);
+    queueNote(framesFromStart, note) {
+        this.notes.push(framesFromStart * slowdownMultiplier + startDelay);
+        this.notePitches.push(note);
 
         let noteIcon = document.createElement("div");
         noteIcon.classList.add("note-icon");
@@ -72,49 +71,70 @@ class Button {
             for (let i = 0; i < this.notes.length; i++) {
                 this.notes[i]--;
                 
-                if (this.notes[i] === 100) this.noteIcons[i].classList.remove("hidden");
-                if (this.notes[i] <= 100) this.noteIcons[i].style.top = `${this.notes[i] * noteSpeed}vh`;
+                if (this.notes[i] <= 100) {
+                    this.noteIcons[i].style.top = `${this.notes[i] * noteSpeed}vh`;
+                    this.noteIcons[i].classList.remove("hidden");
+                }
             }
             
-            if (this.notes[0] <= -80) { // do notes automatically get missed if the next is at 0ms? science can't confirm or deny 😔
+            if (this.notes[0] <= -20) { // do notes automatically get missed if the next is at 0ms? science can't confirm or deny 😔
                 this.miss();
             }
         }
     }
     shiftNotes() {
         this.notes.shift();
+        
         this.noteIcons[0].remove();
         this.noteIcons.shift();
+        
+        this.notePitches.shift();
     }
     miss() {
         console.log("miss");
+        changeScore(-5);
         this.shiftNotes();
     }
     hit() {
-        if (this.notes.length === 0) console.log("no notes");
+        if (this.notes.length === 0) {
+            console.log("no notes");
+            changeScore(-7);
+            return;
+        }
         
         let dontShift = false;
-        if (this.notes[0] <= -30) {
+        if (this.notes[0] <= -10) {
             console.log("garbage");
+            changeScore(-5);
         }
-        else if (this.notes[0] <= -5) {
+        else if (this.notes[0] <= -1) {
             console.log("late");
+            changeScore(-1);
         }
         else if (this.notes[0] <= 5) {
             console.log("perfect");
+            changeScore(3);
         }
-        else if (this.notes[0] <= 20) {
+        else if (this.notes[0] <= 10) {
             console.log("early");
+            changeScore(1);
         }
         else {
             dontShift = true;
             console.log("none");
+            changeScore(-7);
         }
-        
-        if (dontShift === false) this.shiftNotes();
-        
-        this.audio.currentTime = 0.2;
-        this.audio.play(); // this is gonna get a lot more complicated :\
+
+        if (dontShift === false) {
+            if (["a-key", "s-key", "d-key", "f-key"].includes(this.btn.id)) {
+                fisg.playNote(this.notePitches[0]);
+            }
+            else {
+                feesh.playNote(this.notePitches[0]);
+            }
+            
+            this.shiftNotes();
+        }
     }
 }
 
@@ -130,44 +150,30 @@ let buttons = {
     ";": new Button("right-arrow")
 };
 
-for (let i = 0; i < melody.length; i++) {
-    const note = melody[i];
-    switch (note) {
-        case "C":
-            keys.push("a");
-            break;
-        case "D":
-            keys.push("s");
-            break;
-        case "E":
-            keys.push("d");
-            break;
-        case "F":
-            keys.push("f");
-            break;
-        case "G":
-            keys.push("j");
-            break;
-        case "A":
-            keys.push("k");
-            break;
-        case "B":
-            keys.push("l");
-            break;
-        case "c":
-            keys.push(";");
-            break;
-        default:
-            throw "Invalid note: " + note;
-    }
-}
-for (let i = 0; i < keys.length; i++) {
-    const key = keys[i];
-    buttons[key].queueNote(i * restFrames + startDelay);
-}
+Object.keys(feesh.melody).forEach(function(key) {
+    feesh.melody[key].forEach(function(note) {
+        buttons[key].queueNote(note.time, note.note);
+    });
+});
+Object.keys(fisg.melody).forEach(function(key) {
+    fisg.melody[key].forEach(function(note) {
+        buttons[key].queueNote(note.time, note.note);
+    });
+});
+
+currentFrame = 0;
 async function main() {
+    currentFrame++;
     Object.keys(buttons).forEach(function(e) {
         buttons[e].newFrame();
+        if (currentFrame > 420 && currentFrame % 20 == 10 && Math.random() < 0.5 - 0.5 * (0.9999 ** (currentFrame - 200))) {
+            buttons[e].queueNote(101, ["C4", "E4", "G4", "A4", "C5", "E5", "G5", "A5", "C6"][Math.floor(Math.random() * 9)]);
+        }
     });
+    if (score <= 0) {
+        scoreContainer.classList.add("gg");
+        scoreContainer.innerHTML = `GG! You survived for ${currentFrame / 50} seconds.`;
+        clearInterval(runLoop);
+    }
 }
 let runLoop = setInterval(main, 20);

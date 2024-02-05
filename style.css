@@ -41,3 +41,15 @@ div.note-icon {
 .hidden {
     display: none;
 }
+
+#score.gg {
+    margin: 0;
+    position: fixed;
+    background-color: black;
+    color: white;
+    font-size: 3rem;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
