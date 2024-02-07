@@ -9,121 +9,149 @@ else {
 let feesh = {
     playNote: ()=>{console.log("cannot play, no audio")}, // will be monkey-patched to play an actual note once audio is allowed
     melody: {
-        j: [
-            {time: 102, note: "G5"},
-            
-            {time: 126, note: "G4"},
-            {time: 150, note: "G4"},
-            {time: 168, note: "F5"},
-            {time: 183, note: "D#5"},
-            {time: 198, note: "D5"},
-
-            {time: 210, note: "A4"},
-            {time: 222, note: "A4"},
-            {time: 234, note: "G4"},
-            {time: 246, note: "G4"},
-            {time: 258, note: "F#4"},
-            {time: 270, note: "F#4"},
-            {time: 282, note: "F#4"},
-            // {time: 294.5, note: "F#5"}
-        ],
-        k: [
-            {time: 104, note: "A5"},
-
-            {time: 111, note: "B5"},
-            {time: 135, note: "B5"},
-            {time: 159, note: "B5"},
-            {time: 180, note: "E5"},
-            {time: 186, note: "E5"},
-            
-            {time: 212, note: "B4"},
-            {time: 236, note: "A4"},
-            {time: 260, note: "G4"},
-            {time: 285, note: "G4"},
-            {time: 291, note: "G4"},
-            // {time: 296.5, note: "G5"}
-        ],
-        l: [
-            {time: 106, note: "B5"},
-            
-            {time: 108, note: "C6"},
-            {time: 114, note: "C6"},
-            {time: 132, note: "C6"},
-            {time: 138, note: "C6"},
-            {time: 156, note: "C6"},
-            {time: 162, note: "C6"},
-            {time: 174, note: "C6"},
-            {time: 192, note: "G5"},
-
-            {time: 204, note: "C#5"},
-            {time: 214, note: "C#5"},
-            {time: 228, note: "B4"},
-            {time: 238, note: "B4"},
-            {time: 252, note: "A4"},
-            {time: 262, note: "A4"},
-            {time: 276, note: "A4"},
-            {time: 288, note: "A4"},
-            {time: 294, note: "A4"},
-            // {time: 297.5, note: "A5"}
-        ],
-        ";": [
-            
-            {time: 120, note: "G6"},
-            {time: 144, note: "G6"},
-
-            {time: 216, note: "D5"},
-            {time: 240, note: "C5"},
-            {time: 264, note: "B4"},
-            {time: 297, note: "B4"}
-        ]
+        j: [],
+        k: [],
+        l: [],
+        ";": []
     }
 };
 let fisg = {
     playNote: ()=>{console.log("cannot play, no audio")}, // same as feesh.playNote
     melody: {
-        a: [
-            {time: 198, note: "B5"},
-            {time: 240, note: "E5"},
-            {time: 270, note: "B4"},
-        ],
-        s: [
-            {time: 120, note: "D6"},
-            {time: 180, note: "C6"},
-            {time: 216, note: "F#5"},
-            {time: 234, note: "F5"},
-            {time: 264, note: "D#5"}
-        ],
-        d: [
-            {time: 108, note: "E6"},
-            {time: 132, note: "E6"},
-            {time: 168, note: "D6"},
-            {time: 210, note: "G5"},
-            {time: 228, note: "G5"},
-            {time: 258, note: "E5"},
-            {time: 276, note: "E5"}
-        ],
-        f: [
-            {time: 144, note: "F6"},
-            {time: 156, note: "E6"},
-            {time: 204, note: "A5"},
-            {time: 252, note: "F#5"},
-            {time: 288, note: "F5"}
-        ]
+        a: [],
+        s: [],
+        d: [],
+        f: []
     }
 };
+let drums = {
+    times: [],
+    snare: new Tone.Player("/snare.mp3").toDestination()
+};
+
+function addNote(key, note, restLength) {
+    let fish = "asdf".includes(key) ? fisg : feesh; // If the key is A, S, D, or F, use fisg, otherwise use feesh
+
+    fish.melody[key].push({time: currentTime, note: note}); // Add the note to the melody of the given fish
+
+    currentTime += restLength; // Add the rest/note length (no held notes yet, so the two are combined) to the time counter
+}
+
+let currentTime = 204;
+
+{
+    addNote("j", "G5", 4); addNote("k", "A5", 4); addNote("l", "B5", 4);
+    
+    addNote("l", "C6", 6); addNote("k", "B5", 6); addNote("l", "C6", 12); addNote(";", "G6", 12); addNote("j", "G4", 12); addNote("l", "C6", 6); addNote("k", "B5", 6); addNote("l", "C6", 12); addNote(";", "G6", 12); addNote("j", "G4", 12);
+    
+    addNote("l", "C6", 6); addNote("k", "B5", 6); addNote("l", "C6", 12); addNote("j", "F5", 12); addNote("l", "C6", 12); addNote("k", "E5", 6); addNote("j", "D#5", 6); addNote("k", "E5", 12); addNote("l", "G5", 12); addNote("j", "D5", 12);
+    
+    addNote("l", "C#5", 12); addNote("j", "A4", 4); addNote("k", "B4", 4); addNote("l", "C#5", 4); addNote(";", "D5", 12); addNote("j", "A4", 12); addNote("l", "B4", 12); addNote("j", "G4", 4); addNote("k", "A4", 4); addNote("l", "B4", 4); addNote(";", "C5", 12); addNote("j", "G4", 12);
+
+    addNote("l", "A4", 12); addNote("j", "F#4", 4); addNote("k", "G4", 4); addNote("l", "A4", 4); addNote(";", "B4", 12); addNote("j", "F#4", 12); addNote("l", "A4", 12); addNote("j", "F#4", 6); addNote("k", "G4", 6); addNote("l", "A4", 6); addNote("k", "G4", 6); addNote("l", "A4", 6); addNote(";", "B4", 6);
+}
+currentTime = 216;
+{
+    addNote("d", "E6", 24);
+    addNote("s", "D6", 24);
+    addNote("d", "E6", 24);
+    addNote("f", "F6", 24);
+    addNote("f", "E6", 24);
+    addNote("d", "D6", 24);
+    addNote("s", "C6", 36);
+    addNote("a", "B5", 12);
+    addNote("f", "A5", 12);
+    addNote("d", "G5", 12);
+    addNote("s", "F#5", 24);
+    addNote("d", "G5", 12);
+    addNote("s", "F5", 12);
+    addNote("a", "E5", 24);
+    addNote("f", "F#5", 12);
+    addNote("d", "E5", 12);
+    addNote("s", "D#5", 12);
+    addNote("a", "B4", 12);
+    addNote("d", "E5", 24);
+    addNote("f", "F5", 24);
+
+    addNote("d", "E6", 24);
+    addNote("s", "D6", 24);
+    addNote("d", "E6", 24);
+    addNote("f", "F6", 24);
+    addNote("f", "E6", 24);
+    addNote("d", "D6", 24);
+    addNote("s", "C6", 36);
+    addNote("a", "B5", 12);
+    addNote("f", "A5", 12);
+    addNote("d", "G5", 12);
+    addNote("s", "F#5", 24);
+    addNote("d", "G5", 12);
+    addNote("s", "F5", 12);
+    addNote("a", "E5", 24);
+    addNote("f", "F#5", 12);
+    addNote("d", "E5", 12);
+    addNote("s", "D#5", 12);
+    addNote("a", "B4", 12);
+    addNote("d", "E5", 24);
+    addNote("f", "F5", 24);
+}
+
+currentTime = 12;
+{
+    drums.times.push(currentTime); currentTime += 6;
+    drums.times.push(currentTime); currentTime += 6;
+    drums.times.push(currentTime); currentTime += 12;
+    drums.times.push(currentTime); currentTime += 12;
+    drums.times.push(currentTime); currentTime += 12;
+    drums.times.push(currentTime); currentTime += 4;
+    drums.times.push(currentTime); currentTime += 4;
+    drums.times.push(currentTime); currentTime += 4;
+    drums.times.push(currentTime); currentTime += 12;
+    drums.times.push(currentTime); currentTime += 12;
+    drums.times.push(currentTime); currentTime += 12;
+    drums.times.push(currentTime); currentTime += 4;
+    drums.times.push(currentTime); currentTime += 4;
+    drums.times.push(currentTime); currentTime += 4;
+    drums.times.push(currentTime); currentTime += 12;
+    drums.times.push(currentTime); currentTime += 6;
+    drums.times.push(currentTime); currentTime += 6;
+    drums.times.push(currentTime); currentTime += 6;
+    drums.times.push(currentTime); currentTime += 6;
+    drums.times.push(currentTime); currentTime += 6;
+    drums.times.push(currentTime); currentTime += 6;
+    drums.times.push(currentTime); currentTime += 36;
+    drums.times.push(currentTime); currentTime += 4;
+    drums.times.push(currentTime); currentTime += 4;
+    drums.times.push(currentTime);
+    console.log(currentTime);
+}
+
+feesh.melody.j.sort((a, b) => a.time - b.time);
+feesh.melody.k.sort((a, b) => a.time - b.time);
+feesh.melody.l.sort((a, b) => a.time - b.time);
+feesh.melody[";"].sort((a, b) => a.time - b.time);
+
+fisg.melody.a.sort((a, b) => a.time - b.time);
+fisg.melody.s.sort((a, b) => a.time - b.time);
+fisg.melody.d.sort((a, b) => a.time - b.time);
+fisg.melody.f.sort((a, b) => a.time - b.time);
+
+drums.times.sort((a, b) => a - b);
+
 
 async function main() {
     if (audioAlwaysEnabled === false) window.removeEventListener("click", main);
     await Tone.start();
+
+    Tone.loaded().then(() => {
+        const feeshSynth = new Tone.PolySynth(Tone.Synth).toDestination(); // IMPORTANT NOTE: TONE.SAMPLER IS ALREADY POLYPHONIC
+        const fisgSynth = new Tone.PolySynth(Tone.AMSynth).toDestination();
     
-    const synth = new Tone.Synth().toDestination();
-    const pluckSynth = new Tone.AMSynth().toDestination();
-
-    feesh.playNote = function(note) {
-        synth.triggerAttackRelease(note, "8n");
-    }
-
-    fisg.playNote = function(note) {
-        pluckSynth.triggerAttackRelease(note, "8n");
-    }
+        feesh.playNote = function(note) {
+            feeshSynth.triggerAttackRelease(note, "8n");
+        }
+    
+        fisg.playNote = function(note) {
+            fisgSynth.triggerAttackRelease(note, "8n");
+        }
+    });
 }

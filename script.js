@@ -1,5 +1,5 @@
-const noteSpeed = 2;
-const slowdownMultiplier = 4;
+const noteSpeed = 2; // how fast the notes move up the screen (3 = 3vh per frame)
+const slowdownMultiplier = 1;
 const startDelay = 0;
 
 const scoreContainer = document.getElementById("score");
@@ -50,7 +50,7 @@ class Button {
         });
     }
     queueNote(framesFromStart, note) {
-        this.notes.push(framesFromStart * slowdownMultiplier + startDelay);
+        this.notes.push(Math.round(framesFromStart * slowdownMultiplier + startDelay));
         this.notePitches.push(note);
 
         let noteIcon = document.createElement("div");
@@ -79,6 +79,10 @@ class Button {
             
             if (this.notes[0] <= -20) { // do notes automatically get missed if the next is at 0ms? science can't confirm or deny 😔
                 this.miss();
+            }
+
+            if (this.notes[0] === 0) {
+                this.hit();
             }
         }
     }
@@ -166,10 +170,16 @@ async function main() {
     currentFrame++;
     Object.keys(buttons).forEach(function(e) {
         buttons[e].newFrame();
-        if (currentFrame > 420 && currentFrame % 20 == 10 && Math.random() < 0.5 - 0.5 * (0.9999 ** (currentFrame - 200))) {
-            buttons[e].queueNote(101, ["C4", "E4", "G4", "A4", "C5", "E5", "G5", "A5", "C6"][Math.floor(Math.random() * 9)]);
+        if (currentFrame > 1200 && currentFrame % 20 == 10 && Math.random() < 0.5 - 0.5 * (0.9999 ** (currentFrame - 200))) {
+            // buttons[e].queueNote(101, ["C4", "E4", "G4", "A4", "C5", "E5", "G5", "A5", "C6"][Math.floor(Math.random() * 9)]);
         }
     });
+
+    if (drums.times[0] <= Math.round(currentFrame / slowdownMultiplier)) {
+        drums.times.shift();
+        drums.snare.start();
+    }
+    
     if (score <= 0) {
         scoreContainer.classList.add("gg");
         scoreContainer.innerHTML = `GG! You survived for ${currentFrame / 50} seconds.`;
