@@ -1,5 +1,6 @@
-const audioAlwaysEnabled = true; // If user has audio set to Allow instead of Automatic
+const audioAlwaysEnabled = false; // If user has audio set to Allow instead of Automatic
 if (audioAlwaysEnabled === false) {
+    document.getElementById("score").innerHTML = "Click to begin!";
     window.addEventListener('click', main); // Wait for a click event
 }
 else {
@@ -55,7 +56,7 @@ let drums = {
         this.times.push(this.currentTime);
         this.currentTime += restLength;
     },
-    snare: new Tone.Player("/snare.mp3").toDestination()
+    snare: new Tone.Player("snare.mp3").toDestination()
 };
 
 function reusedBeat() {
@@ -112,8 +113,6 @@ intro();
 wiiTanks();
 wiiTanks();
 wiiTanks();
-wiiTanks();
-console.log(fisg.currentTime);
 
 // sort the melodies numerically (so that, in case of a complicated sequence of loops, you don't have negative numbers screwing over the linear reading of the game)
 feesh.sortMelody();
@@ -121,7 +120,11 @@ fisg.sortMelody();
 drums.times.sort((a, b) => a - b);
 
 async function main() {
-    if (audioAlwaysEnabled === false) window.removeEventListener("click", main);
+    if (audioAlwaysEnabled === false) {
+        window.removeEventListener("click", main);
+        document.getElementById("score").innerHTML = "50";
+    }
+    
     await Tone.start();
 
     Tone.loaded().then(() => {
@@ -136,5 +139,9 @@ async function main() {
         fisg.playNote = function(note) {
             fisgSynth.triggerAttackRelease(note, "8n");
         }
+
+        const mainScript = document.createElement("script");
+        mainScript.src = "script.js";
+        document.body.appendChild(mainScript);
     });
 }
