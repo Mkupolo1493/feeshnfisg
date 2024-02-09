@@ -1,5 +1,5 @@
 const noteSpeed = 2; // how fast the notes move up the screen (3 = 3vh per frame)
-const slowdownMultiplier = 1;
+const slowdownMultiplier = 1.5;
 
 const scoreContainer = document.getElementById("score");
 let score = 50;
@@ -169,7 +169,7 @@ async function main() {
     currentFrame++;
     Object.keys(buttons).forEach(function(e) {
         buttons[e].newFrame();
-        if (currentFrame > 1750 && currentFrame % 20 == 10 && Math.random() < 0.5 - 0.5 * (0.9999 ** (currentFrame - 1750))) {
+        if (currentFrame > (1750 * slowdownMultiplier) && currentFrame % 20 == 10 && Math.random() < 0.5 - 0.5 * (0.9999 ** (currentFrame - 1750 * slowdownMultiplier))) {
             buttons[e].queueNote(101, ["C4", "E4", "G4", "A4", "C5", "E5", "G5", "A5", "C6"][Math.floor(Math.random() * 9)]);
         }
     });
@@ -180,9 +180,16 @@ async function main() {
     }
     
     if (score <= 0) {
+        clearInterval(runLoop);
         scoreContainer.classList.add("gg");
         scoreContainer.innerHTML = `GG! You survived for ${currentFrame / 50} seconds.`;
-        clearInterval(runLoop);
+        let highScore = document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("score="))
+          ?.split("=")[1];
+        if (highScore === undefined || highScore < currentFrame) highScore = currentFrame;
+        document.cookie = `score=${highScore}`;
+        scoreContainer.innerHTML += `Your best is ${highScore / 50} seconds.`;
     }
 }
 let runLoop = setInterval(main, 20);
