@@ -80,9 +80,9 @@ class Button {
                 this.miss();
             }
 
-            if (this.notes[0] === 0) {
+            /*if (this.notes[0] === 0) {
                 this.hit();
-            }
+            }*/
         }
     }
     shiftNotes() {
@@ -169,8 +169,8 @@ async function main() {
     currentFrame++;
     Object.keys(buttons).forEach(function(e) {
         buttons[e].newFrame();
-        if (currentFrame > 1200 && currentFrame % 20 == 10 && Math.random() < 0.5 - 0.5 * (0.9999 ** (currentFrame - 200))) {
-            // buttons[e].queueNote(101, ["C4", "E4", "G4", "A4", "C5", "E5", "G5", "A5", "C6"][Math.floor(Math.random() * 9)]);
+        if (currentFrame > 1750 && currentFrame % 20 == 10 && Math.random() < 0.5 - 0.5 * (0.9999 ** (currentFrame - 1750))) {
+            buttons[e].queueNote(101, ["C4", "E4", "G4", "A4", "C5", "E5", "G5", "A5", "C6"][Math.floor(Math.random() * 9)]);
         }
     });
 

@@ -113,6 +113,7 @@ wiiTanks();
 wiiTanks();
 wiiTanks();
 wiiTanks();
+console.log(fisg.currentTime);
 
 // sort the melodies numerically (so that, in case of a complicated sequence of loops, you don't have negative numbers screwing over the linear reading of the game)
 feesh.sortMelody();
