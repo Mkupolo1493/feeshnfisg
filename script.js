@@ -1,6 +1,5 @@
 const noteSpeed = 2; // how fast the notes move up the screen (3 = 3vh per frame)
 const slowdownMultiplier = 1;
-const startDelay = 0;
 
 const scoreContainer = document.getElementById("score");
 let score = 50;
@@ -50,7 +49,7 @@ class Button {
         });
     }
     queueNote(framesFromStart, note) {
-        this.notes.push(Math.round(framesFromStart * slowdownMultiplier + startDelay));
+        this.notes.push(Math.round(framesFromStart * slowdownMultiplier));
         this.notePitches.push(note);
 
         let noteIcon = document.createElement("div");
