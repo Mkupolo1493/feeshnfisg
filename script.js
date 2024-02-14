@@ -135,6 +135,8 @@ class Button {
             else {
                 feesh.playNote(this.notePitches[0]);
             }
+
+            changeSprite(this.btn.id, 25);
             
             this.shiftNotes();
         }
@@ -164,7 +166,26 @@ Object.keys(fisg.melody).forEach(function(key) {
     });
 });
 
-currentFrame = 0;
+let currentFrame = 0;
+
+fisg.orientation = 0;
+fisg.reset = 0;
+
+function changeSprite(key, duration) {
+    let fish = (key === "a-key" || key === "s-key" || key === "d-key" || key === "f-key") ? fisg : feesh;
+    if (fish === feesh) return;
+
+    fisg.orientation = 1; // ["a-key", "s-key", "d-key", "f-key"].indexOf(key);
+    
+    fish.reset = currentFrame + duration;
+
+    updateSprite();
+}
+
+function updateSprite() {
+    document.getElementById("fisg-sprite").src = `/🐟/fisg_${fisg.orientation}a.png`;
+}
+
 function main() {
     currentFrame++;
     Object.keys(buttons).forEach(function(e) {
@@ -173,6 +194,13 @@ function main() {
             buttons[e].queueNote(101, ["C4", "E4", "G4", "A4", "C5", "E5", "G5", "A5", "C6"][Math.floor(Math.random() * 9)]);
         }
     });
+
+    if (currentFrame === fisg.reset) {
+        fisg.orientation = 0;
+    }
+    else if (currentFrame % 10 === 0) {
+        updateSprite();
+    }
 
     if (drums.times[0] <= Math.round(currentFrame / slowdownMultiplier)) {
         drums.times.shift();
