@@ -1,4 +1,4 @@
-const noteSpeed = 2; // how fast the notes move up the screen (3 = 3vh per frame)
+const noteSpeed = 3; // how fast the notes move up the screen (3 = 3vh per frame)
 const slowdownMultiplier = 1.5;
 
 const scoreContainer = document.getElementById("score");
@@ -170,6 +170,8 @@ let currentFrame = 0;
 
 fisg.orientation = 0;
 fisg.spriteVariation = "a";
+fisg.currentSprite = document.getElementById("fisg-sprite-0a");
+updateSprite();
 fisg.reset = 0;
 
 function changeSprite(key, duration) {
@@ -187,20 +189,23 @@ function updateSprite() {
     // Set a new sprite variation for fisg that is different from the current one
     // filter current sprite variation from a list containing all five (abcde) and select one of the remaining four randomly:
     fisg.spriteVariation = ["a", "b", "c", "d", "e"].filter(letter => letter !== fisg.spriteVariation)[Math.floor(Math.random() * 4)];
+
+    fisg.currentSprite.style.display = "none";
+    fisg.currentSprite = document.getElementById(`fisg-sprite-${fisg.orientation}${fisg.spriteVariation}`);
+    fisg.currentSprite.style.display = "block";
     
-    document.getElementById("fisg-sprite").src = `/🐟/fisg_${fisg.orientation}${fisg.spriteVariation}.png`; // set sprite to selected image
-    if (fisg.orientation === 0) document.getElementById("fisg-sprite").style.backgroundColor = "#01f4af00";
-    if (fisg.orientation === 1) document.getElementById("fisg-sprite").style.backgroundColor = "#FAA";
-    if (fisg.orientation === 2) document.getElementById("fisg-sprite").style.backgroundColor = "#FFA";
-    if (fisg.orientation === 3) document.getElementById("fisg-sprite").style.backgroundColor = "#aaffaa";
-    if (fisg.orientation === 4) document.getElementById("fisg-sprite").style.backgroundColor = "#aaaaff";
+    // if (fisg.orientation === 0) document.getElementById("fisg-sprite").style.backgroundColor = "#01f4af00";
+    // if (fisg.orientation === 1) document.getElementById("fisg-sprite").style.backgroundColor = "#FAA";
+    // if (fisg.orientation === 2) document.getElementById("fisg-sprite").style.backgroundColor = "#FFA";
+    // if (fisg.orientation === 3) document.getElementById("fisg-sprite").style.backgroundColor = "#aaffaa";
+    // if (fisg.orientation === 4) document.getElementById("fisg-sprite").style.backgroundColor = "#aaaaff";
 }
 
 function main() {
     currentFrame++;
     Object.keys(buttons).forEach(function(e) {
         buttons[e].newFrame();
-        if (currentFrame > (1400 * slowdownMultiplier) && currentFrame % 20 == 10 && Math.random() < 0.5 - 0.5 * (0.9999 ** (currentFrame - 1000))) {
+        if (/*"asdf".includes(e) && */currentFrame > (1400 * slowdownMultiplier) && currentFrame % 20 == 10 && Math.random() < 0.5 - 0.5 * (0.9999 ** (currentFrame - 1000))) {
             buttons[e].queueNote(101, ["C4", "E4", "G4", "A4", "C5", "E5", "G5", "A5", "C6"][Math.floor(Math.random() * 9)]);
         }
     });
@@ -209,7 +214,7 @@ function main() {
         fisg.orientation = 0;
         updateSprite();
     }
-    else if (fisg.orientation === 0 && currentFrame % 10 === 0) {
+    else if (/*fisg.orientation === 0 && */currentFrame % 10 === 0) {
         updateSprite();
     }
 

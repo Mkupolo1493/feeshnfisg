@@ -54,3 +54,7 @@ div.note-icon {
     top: 0;
     left: 0;
 }
+
+.fish-sprite {
+    display: inline-block;
+}
