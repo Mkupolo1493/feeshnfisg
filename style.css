@@ -24,7 +24,7 @@ html, body {
     color: white;
 }
 #f-key {
-    margin-right: calc(8vw + 4px) !important;
+    margin-right: calc(8vw + 4px);
 }
 
 div.note-icon {
@@ -55,6 +55,25 @@ div.note-icon {
     left: 0;
 }
 
-.fish-sprite {
+#fisg-sprite {
+    width: 15vw;
+    height: 15vw;
     display: inline-block;
+    position: fixed;
+    left: calc(9vw + 48px);
+    top: 10vw;
+}
+#feesh-sprite {
+    width: 15vw;
+    height: 15vw;
+    display: inline-block;
+    position: fixed;
+    left: calc(49vw + 168px);
+    top: 10vw;
+}
+
+.fish-sprite > img {
+    width: 15vw;
+    height: 15vw;
+    image-rendering: crisp-edges;
 }

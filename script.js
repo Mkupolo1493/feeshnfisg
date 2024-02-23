@@ -168,37 +168,47 @@ Object.keys(fisg.melody).forEach(function(key) {
 
 let currentFrame = 0;
 
-fisg.orientation = 0;
-fisg.spriteVariation = "a";
-fisg.currentSprite = document.getElementById("fisg-sprite-0a");
-updateSprite();
-fisg.reset = 0;
-
 function changeSprite(key, duration) {
-    let fish = (key === "a-key" || key === "s-key" || key === "d-key" || key === "f-key") ? fisg : feesh;
-    if (fish === feesh) return;
+    let fish;
 
-    fisg.orientation = ["this is a placeholder for the 0 value, which is the idle position and thus is not used by changeSprite", "a-key", "s-key", "d-key", "f-key"].indexOf(key);
+    switch (key) {
+        case "a-key":
+            fish = fisg;
+            fisg.orientation = 1;
+            break;
+        case "s-key":
+            fish = fisg;
+            fisg.orientation = 2;
+            break;
+        case "d-key":
+            fish = fisg;
+            fisg.orientation = 3;
+            break;
+        case "f-key":
+            fish = fisg;
+            fisg.orientation = 4;
+            break;
+        case "left-arrow":
+            fish = feesh;
+            feesh.orientation = 1;
+            break;
+        case "down-arrow":
+            fish = feesh;
+            feesh.orientation = 2;
+            break;
+        case "up-arrow":
+            fish = feesh;
+            feesh.orientation = 3;
+            break;
+        case "right-arrow":
+            fish = feesh;
+            feesh.orientation = 4;
+            break;
+    }
     
     fish.reset = currentFrame + duration;
 
-    updateSprite();
-}
-
-function updateSprite() {
-    // Set a new sprite variation for fisg that is different from the current one
-    // filter current sprite variation from a list containing all five (abcde) and select one of the remaining four randomly:
-    fisg.spriteVariation = ["a", "b", "c", "d", "e"].filter(letter => letter !== fisg.spriteVariation)[Math.floor(Math.random() * 4)];
-
-    fisg.currentSprite.style.display = "none";
-    fisg.currentSprite = document.getElementById(`fisg-sprite-${fisg.orientation}${fisg.spriteVariation}`);
-    fisg.currentSprite.style.display = "block";
-    
-    // if (fisg.orientation === 0) document.getElementById("fisg-sprite").style.backgroundColor = "#01f4af00";
-    // if (fisg.orientation === 1) document.getElementById("fisg-sprite").style.backgroundColor = "#FAA";
-    // if (fisg.orientation === 2) document.getElementById("fisg-sprite").style.backgroundColor = "#FFA";
-    // if (fisg.orientation === 3) document.getElementById("fisg-sprite").style.backgroundColor = "#aaffaa";
-    // if (fisg.orientation === 4) document.getElementById("fisg-sprite").style.backgroundColor = "#aaaaff";
+    fish.updateSprite();
 }
 
 function main() {
@@ -212,10 +222,18 @@ function main() {
 
     if (currentFrame === fisg.reset) {
         fisg.orientation = 0;
-        updateSprite();
+        fisg.updateSprite();
     }
-    else if (/*fisg.orientation === 0 && */currentFrame % 10 === 0) {
-        updateSprite();
+    else if (currentFrame % 10 === 0) {
+        fisg.updateSprite();
+    }
+
+    if (currentFrame === feesh.reset) {
+        feesh.orientation = 0;
+        feesh.updateSprite();
+    }
+    else if (currentFrame % 10 === 0) {
+        feesh.updateSprite();
     }
 
     if (drums.times[0] <= Math.round(currentFrame / slowdownMultiplier)) {
