@@ -75,5 +75,5 @@ div.note-icon {
 .fish-sprite > img {
     width: 15vw;
     height: 15vw;
-    image-rendering: crisp-edges;
+    image-rendering: pixelated;
 }

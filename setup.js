@@ -27,8 +27,8 @@ let feesh = {
     reset: 0,
     updateSprite: function() {
         // Set a new sprite variation that is different from the current one
-        // filter current sprite variation from a list containing all "five (abcde)" [only 2 rn (ab)] and select one of the remaining four randomly:
-        this.spriteVariation = ["a", "b"/*, "c", "d", "e"*/].filter(letter => letter !== this.spriteVariation)[Math.floor(Math.random() * /*4*/1)];
+        // filter current sprite variation from a list containing all five (abcde) and select one of the remaining four randomly:
+        this.spriteVariation = ["a", "b", "c", "d", "e"].filter(letter => letter !== this.spriteVariation)[Math.floor(Math.random() * 4)];
 
         this.currentSprite.style.display = "none";
         this.currentSprite = document.getElementById(`feesh-sprite-${this.orientation}${this.spriteVariation}`);
@@ -90,8 +90,6 @@ for (let direction = 0; direction < 5; direction++) {
         newSprite.src = `🐟/fisg_${direction}${variation}.png`;
         newSprite.style.display = "none";
         fisg.sprite.appendChild(newSprite);
-
-        if ("dec".includes(variation)) return;
         
         let newerSprite = document.createElement("img");
         newerSprite.id = "feesh-sprite-" + direction + variation;
