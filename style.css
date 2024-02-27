@@ -77,3 +77,29 @@ div.note-icon {
     height: 15vw;
     image-rendering: pixelated;
 }
+
+div.note-icon.a-key-note {
+    background-color: #F77;
+}
+div.note-icon.s-key-note {
+    background-color: #FF7;
+}
+div.note-icon.d-key-note {
+    background-color: #7F7;
+}
+div.note-icon.f-key-note {
+    background-color: #77F;
+}
+
+div.note-icon.left-arrow-note {
+    background-color: #FDB;
+}
+div.note-icon.down-arrow-note {
+    background-color: #DFB;
+}
+div.note-icon.up-arrow-note {
+    background-color: #BDD;
+}
+div.note-icon.right-arrow-note {
+    background-color: #DBD;
+}

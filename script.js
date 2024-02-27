@@ -1,5 +1,5 @@
-const noteSpeed = 3; // how fast the notes move up the screen (3 = 3vh per frame)
-const slowdownMultiplier = 1.5;
+const noteSpeed = 1.5; // how fast the notes move up the screen (3 = 3vh per frame)
+const slowdownMultiplier = 1.75;
 
 const scoreContainer = document.getElementById("score");
 let score = 50;
@@ -54,6 +54,7 @@ class Button {
 
         let noteIcon = document.createElement("div");
         noteIcon.classList.add("note-icon");
+        noteIcon.classList.add(`${this.btn.id}-note`);
         noteIcon.classList.add("hidden");
         
         this.noteIcons.push(noteIcon);
@@ -80,7 +81,7 @@ class Button {
                 this.miss();
             }
 
-            /*if (this.notes[0] === 0) {
+            /*if (this.notes[0] === 0 && !["a-key", "s-key", "d-key", "f-key"].includes(this.btn.id)) {
                 this.hit();
             }*/
         }

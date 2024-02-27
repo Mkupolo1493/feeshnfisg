@@ -67,10 +67,131 @@ function wiiTanks() { // enemy name: Green Tank
     drums.addHit(12); drums.addHit(12); drums.addHit(12); drums.addHit(4); drums.addHit(4); drums.addHit(4);
 }
 
-intro();
+// C, F, and G are SHARPS
+function bpSimpleBeat() {
+    fisg.addNote("f", "F#3", 0); fisg.addNote("a", "F#2", 40);
+    fisg.addNote("f", "F#3", 0); fisg.addNote("a", "F#2", 24);
+}
+function bpAlternatingBeat() {
+    fisg.addNote("a", "F#2", 8); fisg.addNote("f", "F#3", 8);
+    fisg.addNote("a", "F#2", 8); fisg.addNote("f", "F#3", 8);
+    fisg.addNote("a", "F#2", 8); fisg.addNote("f", "F#3", 8);
+    fisg.addNote("a", "F#2", 8); fisg.addNote("f", "F#3", 8);
+}
+function bpAlternatingBeat2() {
+    fisg.addNote("a", "D2", 8); fisg.addNote("d", "D3", 8);
+    fisg.addNote("a", "D2", 8); fisg.addNote("d", "D3", 8);
+    fisg.addNote("s", "E2", 8); fisg.addNote("f", "E3", 8);
+    fisg.addNote("s", "E2", 8); fisg.addNote("f", "E3", 8);
+}
+function bpRhythmicBeat() {
+    fisg.addNote("d", "D3", 0); fisg.addNote("a", "D2", 12);
+    fisg.addNote("d", "D3", 0); fisg.addNote("a", "D2", 12);
+    fisg.addNote("d", "D3", 0); fisg.addNote("a", "D2", 24);
+    fisg.addNote("d", "D3", 0); fisg.addNote("a", "D2", 16);
+
+    fisg.addNote("f", "E3", 0); fisg.addNote("s", "E2", 12);
+    fisg.addNote("f", "E3", 0); fisg.addNote("s", "E2", 12);
+    fisg.addNote("f", "E3", 0); fisg.addNote("s", "E2", 24);
+    fisg.addNote("f", "E3", 0); fisg.addNote("s", "E2", 16);
+}
+function bpSubmotif() {
+    feesh.addNote("j", "F#4", 4);
+    feesh.addNote("j", "F#4", 4);
+    feesh.addNote("j", "F#4", 8);
+    feesh.addNote("j", "F#4", 8);
+    feesh.addNote("j", "F#4", 16);
+}
+function bpMotif() {
+    feesh.addNote("j", "F#4", 12);
+    bpSubmotif();
+}
+
+
+fisg.currentTime = 42;
+for (let i = 0; i < 4; i++) {
+    bpSimpleBeat();
+    bpSimpleBeat();
+    bpRhythmicBeat();
+}
+for (let i = 0; i < 3; i++) {
+    bpAlternatingBeat();
+    bpAlternatingBeat2();
+}
+
+feesh.currentTime = 554;
+feesh.addNote("k", "A4", 12); bpMotif();
+
+feesh.addNote("j", "F#4", 12); bpMotif();
+
+feesh.addNote("k", "A4", 12); bpMotif();
+
+feesh.addNote("j", "F#4", 0); feesh.addNote("l", "B4", 12); bpMotif();
+feesh.currentTime -= 32;
+feesh.addNote("l", "B4", 24); feesh.addNote(";", "D5", 8);
+
+feesh.addNote("k", "A4", 0); feesh.addNote("l", "C#5", 12); bpMotif();
+
+feesh.addNote("j", "F#4", 4); feesh.addNote("j", "F#4", 4); feesh.addNote("j", "F#4", 8);
+feesh.addNote("j", "F#4", 8); bpSubmotif();
+
+feesh.addNote("k", "A4", 12); bpMotif();
+
+feesh.addNote("j", "F#4", 0); feesh.addNote("l", "B4", 12); bpMotif();
+feesh.currentTime -= 40;
+feesh.addNote("l", "B4", 24); feesh.addNote(";", "E5", 16);
+
+feesh.addNote("j", "F#4", 8);
+feesh.addNote("j", "F#4", 12);
+feesh.addNote("j", "F#4", 4);
+feesh.addNote("j", "F#4", 8);
+feesh.addNote("l", "C#5", 12);
+feesh.addNote(";", "E5", 12);
+feesh.addNote("l", "C#5", 16);
+
+feesh.addNote("k", "A4", 12);
+feesh.addNote("k", "A4", 4);
+feesh.addNote("k", "A4", 8);
+feesh.addNote("k", "A4", 12);
+feesh.addNote("l", "C#5", 12);
+feesh.addNote("j", "F#4", 16);
+
+feesh.addNote("j", "F#4", 12);
+feesh.addNote("j", "F#4", 4);
+feesh.addNote("j", "F#4", 8);
+feesh.addNote("l", "C#5", 12);
+feesh.addNote(";", "E5", 12);
+feesh.addNote("l", "C#5", 16);
+
+feesh.addNote("j", "F#4", 12);
+feesh.addNote("j", "F#4", 4);
+feesh.addNote("j", "F#4", 8);
+feesh.addNote("l", "A4", 12);
+feesh.addNote(";", "C#5", 4);
+feesh.addNote("l", "A4", 4);
+feesh.addNote("k", "G#4", 4);
+feesh.addNote("j", "F#4", 16);
+
+feesh.addNote("j", "F#4", 12);
+feesh.addNote("j", "F#4", 4);
+feesh.addNote("k", "G#4", 4);
+feesh.addNote("l", "A4", 4);
+feesh.addNote("l", "C#5", 12);
+feesh.addNote(";", "E5", 12);
+feesh.addNote("l", "C#5", 16);
+
+feesh.addNote("j", "F#4", 12);
+feesh.addNote("j", "F#4", 4);
+feesh.addNote("k", "G#4", 4);
+feesh.addNote("l", "A4", 4);
+feesh.addNote("l", "A4", 12);
+feesh.addNote(";", "C#5", 12);
+feesh.addNote("l", "F#4", 16);
+
+/*intro();
 wiiTanks();
 wiiTanks();
-wiiTanks();
+wiiTanks();*/
 
 // sort the melodies numerically (so that, in case of a complicated sequence of loops, you don't have negative numbers screwing over the linear reading of the game)
 feesh.sortMelody();
