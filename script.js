@@ -1,7 +1,8 @@
-const noteSpeed = 2; // how fast the notes move up the screen (3 = 3vh per frame)
-const slowdownMultiplier = 1.4;
+const noteSpeed = 3; // how fast the notes move up the screen (3 = 3vh per frame)
+const slowdownMultiplier = 1.39;
 
 const scoreContainer = document.getElementById("score");
+scoreContainer.title = slowdownMultiplier;
 let score = 50;
 
 function changeScore(amount) {
@@ -81,9 +82,9 @@ class Button {
                 this.miss();
             }
 
-            if (this.notes[0] === 0/* && ["a-key", "s-key", "d-key", "f-key"].includes(this.btn.id)*/) {
+            /*if (this.notes[0] === 0) {// && ["a-key", "s-key", "d-key", "f-key"].includes(this.btn.id)) {
                 this.hit();
-            }
+            }*/
         }
     }
     shiftNotes() {
@@ -217,7 +218,7 @@ function main() {
     Object.keys(buttons).forEach(function(e) {
         buttons[e].newFrame();
         if (/*"asdf".includes(e) && */currentFrame > (2500 * slowdownMultiplier) && currentFrame % 20 == 10 && Math.random() < 0.5 - 0.5 * (0.9999 ** (currentFrame - 1000))) {
-            buttons[e].queueNote(101, ["C4", "E4", "G4", "A4", "C5", "E5", "G5", "A5", "C6"][Math.floor(Math.random() * 9)]);
+            buttons[e].queueNote(101, /*["C4", "E4", "G4", "A4", "C5", "E5", "G5", "A5", "C6"]*/["E5", "F#5", "A5", "B5"][Math.floor(Math.random() * 4)]);
         }
     });
 

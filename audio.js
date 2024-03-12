@@ -143,11 +143,11 @@ fisg.addNote("s", "A3", 8);
 fisg.addNote("a", "F#3", 12);
 fisg.addNote("a", "F#1", 0); fisg.addNote("f", "F#2", 16);
 
-fisg.addNote("d", "C#3", 0); fisg.addNote("f", "C#4", 8);
-fisg.addNote("s", "C3", 0); fisg.addNote("f", "C4", 8);
-fisg.addNote("a", "B2", 0); fisg.addNote("f", "B3", 4);
-fisg.addNote("a", "A2", 0); fisg.addNote("d", "A3", 8);
-fisg.addNote("a", "F#2", 0); fisg.addNote("s", "F#3", 12);
+fisg.addNote("f", "C#4", 8);
+fisg.addNote("f", "C4", 8);
+fisg.addNote("d", "B3", 4);
+fisg.addNote("s", "A3", 8);
+fisg.addNote("a", "F#3", 12);
 
 feesh.currentTime = 554;
 feesh.addNote("k", "A4", 12); bpMotif();
@@ -280,13 +280,14 @@ feesh.addNote("l", "F#5", 28);
 feesh.addNote("l", "F#5", 8);
 feesh.currentTime -= 64;
 feesh.addNote("j", "F#4", 12);
-bpMotif();
+// bpMotif();
+feesh.currentTime += 54;
 
-feesh.addNote("l", "C#5", 0); feesh.addNote(";", "C#6", 8);
-feesh.addNote("k", "C5", 0); feesh.addNote(";", "C6", 8);
-feesh.addNote("j", "B4", 0); feesh.addNote(";", "B5", 4);
-feesh.addNote("j", "A4", 0); feesh.addNote("l", "A5", 8);
-feesh.addNote("j", "F#4", 0); feesh.addNote("k", "F#5", 12);
+feesh.addNote(";", "C#6", 8);
+feesh.addNote(";", "C6", 8);
+feesh.addNote("l", "B5", 4);
+feesh.addNote("k", "A5", 8);
+feesh.addNote("j", "F#5", 12);
 
 
 /*intro();
@@ -304,6 +305,9 @@ async function main() {
         window.removeEventListener("click", main);
         document.getElementById("score").innerHTML = "50";
     }
+
+    setTimeout(()=>{document.getElementById("backtrack").play();},1650);
+    document.getElementById("backtrack").volume = 0.4;
     
     await Tone.start();
 
