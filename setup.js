@@ -1,5 +1,6 @@
 // make a fish (enemy? side character? boss? idk) that is slightly low-poly looking (like the Sharp bird from journal 2/21)
 // idea credit: Eila
+// make Incandescent Fish enemy
 
 class Fish {
     constructor(name, keys) {

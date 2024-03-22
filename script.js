@@ -82,9 +82,9 @@ class Button {
                 this.miss();
             }
 
-            /*if (this.notes[0] === 0) {// && ["a-key", "s-key", "d-key", "f-key"].includes(this.btn.id)) {
+            if (this.notes[0] === 0) {// && ["a-key", "s-key", "d-key", "f-key"].includes(this.btn.id)) {
                 this.hit();
-            }*/
+            }
         }
     }
     shiftNotes() {

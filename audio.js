@@ -306,8 +306,10 @@ async function main() {
         document.getElementById("score").innerHTML = "50";
     }
 
-    setTimeout(()=>{document.getElementById("backtrack").play();},1650);
-    document.getElementById("backtrack").volume = 0.4;
+    const backtrack = document.getElementById("backtrack");
+    backtrack.volume = 0;
+    backtrack.play();
+    setTimeout(()=>{backtrack.currentTime = 0; backtrack.volume = 0.4},1720);
     
     await Tone.start();
 
