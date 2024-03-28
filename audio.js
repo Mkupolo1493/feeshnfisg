@@ -1,10 +1,12 @@
 const audioAlwaysEnabled = false; // If user has audio set to Allow instead of Automatic
-if (audioAlwaysEnabled === false) {
-    document.getElementById("score").innerHTML = "Click to begin!";
-    window.addEventListener('click', main); // Wait for a click event
-}
-else {
-    main(); // Fire away
+window.onload = function() {
+    if (audioAlwaysEnabled === false) {
+        document.getElementById("score").innerHTML = "Click to begin!";
+        window.addEventListener('click', main); // Wait for a click event
+    }
+    else {
+        main(); // Fire away
+    }
 }
 
 let drums = {
@@ -307,9 +309,6 @@ async function main() {
     }
 
     const backtrack = document.getElementById("backtrack");
-    backtrack.volume = 0;
-    backtrack.play();
-    setTimeout(()=>{backtrack.currentTime = 0; backtrack.volume = 0.4},1720);
     
     await Tone.start();
 

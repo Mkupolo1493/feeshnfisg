@@ -4,6 +4,7 @@ html, body {
     margin: 0;
     background-color: #def;
     overflow: hidden;
+    user-select: none;
 }
 #notes > div {
     display: inline-block;

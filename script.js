@@ -82,9 +82,9 @@ class Button {
                 this.miss();
             }
 
-            if (this.notes[0] === 0) {// && ["a-key", "s-key", "d-key", "f-key"].includes(this.btn.id)) {
+            /*if (this.notes[0] === 0) {// && ["a-key", "s-key", "d-key", "f-key"].includes(this.btn.id)) {
                 this.hit();
-            }
+            }*/
         }
     }
     shiftNotes() {
@@ -112,11 +112,11 @@ class Button {
             console.log("garbage");
             changeScore(-5);
         }
-        else if (this.notes[0] <= -1) {
+        else if (this.notes[0] <= -3) {
             console.log("late");
             changeScore(-1);
         }
-        else if (this.notes[0] <= 5) {
+        else if (this.notes[0] <= 3) {
             console.log("perfect");
             changeScore(3);
         }
@@ -133,6 +133,7 @@ class Button {
         if (dontShift === false) {
             if (["a-key", "s-key", "d-key", "f-key"].includes(this.btn.id)) {
                 fisg.playNote(this.notePitches[0]);
+                if (this.notePitches[0] === "F#2") console.log(currentFrame);
             }
             else {
                 feesh.playNote(this.notePitches[0]);
@@ -241,6 +242,11 @@ function main() {
     if (drums.times[0] <= Math.round(currentFrame / slowdownMultiplier)) {
         drums.times.shift();
         drums.snare.start();
+    }
+    if (currentFrame === Math.floor(42 * slowdownMultiplier)) {
+        document.body.style.backgroundColor = "#facade";
+        backtrack.volume = 0.4;
+        backtrack.play();
     }
     
     if (score <= 0) {
