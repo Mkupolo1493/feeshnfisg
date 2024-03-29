@@ -6,7 +6,7 @@ switch (song) {
     case "blast-processing":
         backtrack.src = "https://vgmsite.com/soundtracks/geometry-dash-android-ios-macos-windows-gamerip-2013/vojywrcrng/05.%20Blast%20Processing.mp3";
         break;
-    case "wiitanks":
+    case "wii-tanks":
         backtrack.src = "https://epsilon.vgmsite.com/soundtracks/wii-play/hmcevebe/061%20-%20Tanks%20-%20Variation%206.mp3";
         break;
 }
@@ -27,25 +27,12 @@ window.onload = function() {
 }
 
 
-function reusedBeat() {
-    drums.addHit(12); drums.addHit(12); drums.addHit(12); drums.addHit(4); drums.addHit(4); drums.addHit(4); drums.addHit(12); drums.addHit(12); drums.addHit(12); drums.addHit(4); drums.addHit(4); drums.addHit(4);
-
-    drums.addHit(12); drums.addHit(6); drums.addHit(6); drums.addHit(6); drums.addHit(6); drums.addHit(6); drums.addHit(6);
-}
 function intro() {
     feesh.currentTime += 204;
 
     feesh.addNote("j", "G5", 4); feesh.addNote("k", "A5", 4); feesh.addNote("l", "B5", 4);
 
     fisg.currentTime += 216;
-
-    drums.currentTime += 12;
-
-    drums.addHit(6); drums.addHit(6);
-    
-    reusedBeat();
-    
-    drums.addHit(36); drums.addHit(4); drums.addHit(4); drums.addHit(4);
 }
 function wiiTanks() { // enemy name: Green Tank
     feesh.addNote("l", "C6", 6); feesh.addNote("k", "B5", 6); feesh.addNote("l", "C6", 12); feesh.addNote(";", "G6", 12); feesh.addNote("j", "G4", 12); feesh.addNote("l", "C6", 6); feesh.addNote("k", "B5", 6); feesh.addNote("l", "C6", 12); feesh.addNote(";", "G6", 12); feesh.addNote("j", "G4", 12);
@@ -64,15 +51,6 @@ function wiiTanks() { // enemy name: Green Tank
     fisg.addNote("f", "A5", 12); fisg.addNote("d", "G5", 12); fisg.addNote("s", "F#5", 24); fisg.addNote("d", "G5", 12); fisg.addNote("s", "F5", 12); fisg.addNote("a", "E5", 24);
     
     fisg.addNote("f", "F#5", 12); fisg.addNote("d", "E5", 12); fisg.addNote("s", "D#5", 12); fisg.addNote("a", "B4", 12); fisg.addNote("d", "E5", 24); fisg.addNote("f", "F5", 24);
-
-
-    reusedBeat();
-
-    drums.addHit(12); drums.addHit(12); drums.addHit(4); drums.addHit(4); drums.addHit(4); drums.addHit(3); drums.addHit(3); drums.addHit(3); drums.addHit(3);
-
-    reusedBeat();
-
-    drums.addHit(12); drums.addHit(12); drums.addHit(12); drums.addHit(4); drums.addHit(4); drums.addHit(4);
 }
 
 // C, F, and G are SHARPS

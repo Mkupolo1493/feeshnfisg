@@ -1,4 +1,4 @@
-const noteSpeed = 3; // how fast the notes move up the screen (3 = 3vh per frame)
+const noteSpeed = 4; // how fast the notes move up the screen (3 = 3vh per frame)
 let slowdownMultiplier = 1;
 if (song === "blast-processing") {
     slowdownMultiplier = 1.39; // Blast Processing
@@ -35,6 +35,7 @@ class Button {
         this.btn = document.getElementById(elementId);
         
         this.notes = [];
+        this.notesCopy = [];
         this.noteIcons = [];
         this.notePitches = [];
         
@@ -56,7 +57,9 @@ class Button {
         });
     }
     queueNote(framesFromStart, note) {
-        this.notes.push(Math.round(framesFromStart * slowdownMultiplier));
+        const newTime = Math.round(framesFromStart * slowdownMultiplier);
+        this.notes.push(newTime);
+        this.notesCopy.push(newTime)
         this.notePitches.push(note);
 
         let noteIcon = document.createElement("div");
@@ -77,6 +80,7 @@ class Button {
         if (this.notes.length) {
             for (let i = 0; i < this.notes.length; i++) {
                 this.notes[i]--;
+                this.notesCopy[i]--;
                 
                 if (this.notes[i] <= 100) {
                     this.noteIcons[i].style.top = `${this.notes[i] * noteSpeed}vh`;
@@ -88,8 +92,11 @@ class Button {
                 this.miss();
             }
 
-            if (this.notes[0] === 0) {// && ["a-key", "s-key", "d-key", "f-key"].includes(this.btn.id)) {
+            if (this.notesCopy[0] === 0) {// && ["a-key", "s-key", "d-key", "f-key"].includes(this.btn.id)) {
+                this.notesCopy.shift();
+                
                 // this.hit();
+                
                 let color = null;
 
                 if (this.btn.id === "a-key") color = "#fdd";
@@ -97,7 +104,9 @@ class Button {
                 else if (this.btn.id === "d-key") color = "#dfd";
                 else if (this.btn.id === "f-key") color = "#ddf";
                 
-                if (color != null) document.body.style.backgroundColor = color;
+                if (color != null) {
+                    document.body.style.backgroundColor = color;
+                }
             }
         }
     }
@@ -252,7 +261,7 @@ function main() {
         feesh.updateSprite();
     }
 
-    if (currentFrame === Math.floor(42 * slowdownMultiplier) + 2) {
+    if (currentFrame === Math.round(42 * slowdownMultiplier) + 1) {
         document.body.style.backgroundColor = "#facade";
         backtrack.volume = 0.4;
         backtrack.play();
