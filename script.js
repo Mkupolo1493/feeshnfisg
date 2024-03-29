@@ -1,5 +1,11 @@
 const noteSpeed = 3; // how fast the notes move up the screen (3 = 3vh per frame)
-const slowdownMultiplier = 1.39;
+let slowdownMultiplier = 1;
+if (song === "blast-processing") {
+    slowdownMultiplier = 1.39; // Blast Processing
+}
+else if (song === "wii-tanks") {
+    slowdownMultiplier = 1.04; // Wii Tanks
+}
 
 const scoreContainer = document.getElementById("score");
 scoreContainer.title = slowdownMultiplier;
@@ -82,9 +88,17 @@ class Button {
                 this.miss();
             }
 
-            /*if (this.notes[0] === 0) {// && ["a-key", "s-key", "d-key", "f-key"].includes(this.btn.id)) {
-                this.hit();
-            }*/
+            if (this.notes[0] === 0) {// && ["a-key", "s-key", "d-key", "f-key"].includes(this.btn.id)) {
+                // this.hit();
+                let color = null;
+
+                if (this.btn.id === "a-key") color = "#fdd";
+                else if (this.btn.id === "s-key") color = "#ffd";
+                else if (this.btn.id === "d-key") color = "#dfd";
+                else if (this.btn.id === "f-key") color = "#ddf";
+                
+                if (color != null) document.body.style.backgroundColor = color;
+            }
         }
     }
     shiftNotes() {
@@ -133,7 +147,6 @@ class Button {
         if (dontShift === false) {
             if (["a-key", "s-key", "d-key", "f-key"].includes(this.btn.id)) {
                 fisg.playNote(this.notePitches[0]);
-                if (this.notePitches[0] === "F#2") console.log(currentFrame);
             }
             else {
                 feesh.playNote(this.notePitches[0]);
@@ -169,7 +182,7 @@ Object.keys(fisg.melody).forEach(function(key) {
     });
 });
 
-let currentFrame = 0;
+let currentFrame = -1;
 
 function changeSprite(key, duration) {
     let fish;
@@ -239,11 +252,7 @@ function main() {
         feesh.updateSprite();
     }
 
-    if (drums.times[0] <= Math.round(currentFrame / slowdownMultiplier)) {
-        drums.times.shift();
-        drums.snare.start();
-    }
-    if (currentFrame === Math.floor(42 * slowdownMultiplier)) {
+    if (currentFrame === Math.floor(42 * slowdownMultiplier) + 2) {
         document.body.style.backgroundColor = "#facade";
         backtrack.volume = 0.4;
         backtrack.play();

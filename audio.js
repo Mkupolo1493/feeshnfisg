@@ -1,23 +1,31 @@
-const audioAlwaysEnabled = false; // If user has audio set to Allow instead of Automatic
+const song = "blast-processing";
+
+const backtrack = document.createElement("audio");
+backtrack.preload = "auto";
+switch (song) {
+    case "blast-processing":
+        backtrack.src = "https://vgmsite.com/soundtracks/geometry-dash-android-ios-macos-windows-gamerip-2013/vojywrcrng/05.%20Blast%20Processing.mp3";
+        break;
+    case "wiitanks":
+        backtrack.src = "https://epsilon.vgmsite.com/soundtracks/wii-play/hmcevebe/061%20-%20Tanks%20-%20Variation%206.mp3";
+        break;
+}
+
 window.onload = function() {
-    if (audioAlwaysEnabled === false) {
-        document.getElementById("score").innerHTML = "Click to begin!";
-        window.addEventListener('click', main); // Wait for a click event
-    }
-    else {
-        main(); // Fire away
+    let promise = backtrack.play();
+
+    if (typeof promise !== "undefined") {
+        promise.then(function() {
+            backtrack.pause();
+            backtrack.currentTime = 0;
+            main();
+        }).catch(function(error) {
+            document.getElementById("score").innerHTML = "Click to begin!";
+            window.addEventListener("click", main); // Wait for a click event
+        });
     }
 }
 
-let drums = {
-    times: [],
-    currentTime: 0,
-    addHit: function(restLength) {
-        this.times.push(this.currentTime);
-        this.currentTime += restLength;
-    },
-    snare: new Tone.Player("snare.mp3").toDestination()
-};
 
 function reusedBeat() {
     drums.addHit(12); drums.addHit(12); drums.addHit(12); drums.addHit(4); drums.addHit(4); drums.addHit(4); drums.addHit(12); drums.addHit(12); drums.addHit(12); drums.addHit(4); drums.addHit(4); drums.addHit(4);
@@ -108,207 +116,205 @@ function bpMotif() {
 }
 
 
-fisg.currentTime = 42;
-for (let i = 0; i < 4; i++) {
+function blastProcessing() {
+    fisg.currentTime = 42;
+    for (let i = 0; i < 4; i++) {
+        bpSimpleBeat();
+        bpSimpleBeat();
+        bpRhythmicBeat();
+    }
+    
+    for (let i = 0; i < 3; i++) {
+        bpAlternatingBeat();
+        bpAlternatingBeat2();
+    }
+    
+    fisg.addNote("a", "F#1", 8); fisg.addNote("s", "F#1", 8);
+    fisg.addNote("a", "F#1", 8); fisg.addNote("s", "F#1", 8);
+    fisg.addNote("a", "G#1", 8); fisg.addNote("d", "G#2", 8);
+    fisg.addNote("a", "G#1", 8); fisg.addNote("d", "G#2", 8);
+    
+    fisg.addNote("a", "D2", 8); fisg.addNote("f", "D3", 8);
+    fisg.addNote("a", "D2", 8); fisg.addNote("f", "D3", 8);
+    fisg.addNote("s", "E2", 8); fisg.addNote("f", "E3", 8);
+    fisg.addNote("s", "E2", 16);
+    
     bpSimpleBeat();
     bpSimpleBeat();
     bpRhythmicBeat();
+    
+    bpSimpleBeat();
+    bpSimpleBeat();
+    bpRhythmicBeat();
+    
+    fisg.addNote("f", "C#4", 8);
+    fisg.addNote("f", "C4", 8);
+    fisg.addNote("d", "B3", 4);
+    fisg.addNote("s", "A3", 8);
+    fisg.addNote("a", "F#3", 12);
+    fisg.addNote("a", "F#1", 0); fisg.addNote("f", "F#2", 16);
+    
+    fisg.addNote("f", "C#4", 8);
+    fisg.addNote("f", "C4", 8);
+    fisg.addNote("d", "B3", 4);
+    fisg.addNote("s", "A3", 8);
+    fisg.addNote("a", "F#3", 12);
+    
+    feesh.currentTime = 554;
+    feesh.addNote("k", "A4", 12); bpMotif();
+    
+    feesh.addNote("j", "F#4", 12); bpMotif();
+    
+    feesh.addNote("k", "A4", 12); bpMotif();
+    
+    feesh.addNote("j", "F#4", 0); feesh.addNote("l", "B4", 12); bpMotif();
+    feesh.currentTime -= 32;
+    feesh.addNote("l", "B4", 24); feesh.addNote(";", "D5", 8);
+    
+    feesh.addNote("k", "A4", 0); feesh.addNote("l", "C#5", 12); bpMotif();
+    
+    feesh.addNote("j", "F#4", 4); feesh.addNote("j", "F#4", 4); feesh.addNote("j", "F#4", 8);
+    feesh.addNote("j", "F#4", 8); bpSubmotif();
+    
+    feesh.addNote("k", "A4", 12); bpMotif();
+    
+    feesh.addNote("j", "F#4", 0); feesh.addNote("l", "B4", 12); bpMotif();
+    feesh.currentTime -= 40;
+    feesh.addNote("l", "B4", 24); feesh.addNote(";", "E5", 16);
+    
+    feesh.addNote("j", "F#4", 8);
+    feesh.addNote("j", "F#4", 12);
+    feesh.addNote("j", "F#4", 4);
+    feesh.addNote("j", "F#4", 8);
+    feesh.addNote("l", "C#5", 12);
+    feesh.addNote(";", "E5", 12);
+    feesh.addNote("l", "C#5", 16);
+    
+    feesh.addNote("k", "A4", 12);
+    feesh.addNote("k", "A4", 4);
+    feesh.addNote("k", "A4", 8);
+    feesh.addNote("k", "A4", 12);
+    feesh.addNote("l", "C#5", 12);
+    feesh.addNote("j", "F#4", 16);
+    
+    feesh.addNote("j", "F#4", 12);
+    feesh.addNote("j", "F#4", 4);
+    feesh.addNote("j", "F#4", 8);
+    feesh.addNote("l", "C#5", 12);
+    feesh.addNote(";", "E5", 12);
+    feesh.addNote("l", "C#5", 16);
+    
+    feesh.addNote("j", "F#4", 12);
+    feesh.addNote("j", "F#4", 4);
+    feesh.addNote("j", "F#4", 8);
+    feesh.addNote("l", "A4", 12);
+    feesh.addNote(";", "C#5", 4);
+    feesh.addNote("l", "A4", 4);
+    feesh.addNote("k", "G#4", 4);
+    feesh.addNote("j", "F#4", 16);
+    
+    feesh.addNote("j", "F#4", 12);
+    feesh.addNote("j", "F#4", 4);
+    feesh.addNote("k", "G#4", 4);
+    feesh.addNote("l", "A4", 4);
+    feesh.addNote("l", "C#5", 12);
+    feesh.addNote(";", "E5", 12);
+    feesh.addNote("l", "C#5", 16);
+    
+    feesh.addNote("j", "F#4", 12);
+    feesh.addNote("j", "F#4", 4);
+    feesh.addNote("k", "G#4", 4);
+    feesh.addNote("l", "A4", 4);
+    feesh.addNote("l", "A4", 12);
+    feesh.addNote(";", "C#5", 12);
+    feesh.addNote("l", "F#4", 16);
+    
+    feesh.addNote("l", "A4", 12);
+    feesh.addNote("j", "F#4", 4);
+    feesh.addNote("k", "G#4", 4);
+    feesh.addNote("l", "A4", 4);
+    feesh.addNote("l", "C#5", 12);
+    feesh.addNote(";", "E5", 12);
+    feesh.addNote("l", "C#5", 16);
+    
+    feesh.addNote("j", "F#4", 4);
+    feesh.addNote("j", "F#4", 8);
+    feesh.addNote("j", "F#4", 4);
+    feesh.addNote("j", "F#4", 24);
+    feesh.addNote("j", "E4", 0); feesh.addNote(";", "E5", 16);
+    
+    feesh.addNote("k", "A4", 0); feesh.addNote(";", "A5", 12);
+    feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 12);
+    feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 4);
+    feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 4);
+    feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 8);
+    feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 8);
+    feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 16);
+    
+    feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 12);
+    feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 12);
+    feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 4);
+    feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 4);
+    feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 8);
+    feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 8);
+    feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 16);
+    
+    feesh.addNote("k", "A4", 12); bpMotif();
+    
+    feesh.addNote("j", "F#4", 12); bpMotif();
+    feesh.currentTime -= 16;
+    feesh.addNote(";", "F#5", 16);
+    
+    feesh.addNote("k", "A4", 0); feesh.addNote("l", "E5", 12);
+    feesh.addNote(";", "F#5", 0); bpMotif();
+    
+    feesh.addNote("j", "F#4", 4);
+    feesh.addNote("j", "F#4", 4);
+    feesh.addNote("j", "F#4", 8);
+    feesh.addNote("j", "F#4", 8);
+    bpSubmotif();
+    feesh.currentTime -= 8;
+    feesh.addNote("j", "F#4", 8);
+    
+    feesh.addNote("k", "A4", 0); feesh.addNote("l", "A5", 12);
+    feesh.addNote("k", "F#5", 0); bpMotif();
+    feesh.currentTime -= 40;
+    feesh.addNote(";", "C#6", 24);
+    feesh.addNote(";", "B5", 8);
+    feesh.addNote("l", "A5", 8);
+    
+    feesh.addNote(";", "B5", 8);
+    feesh.addNote("l", "A5", 8);
+    feesh.addNote("l", "F#5", 4);
+    feesh.addNote("k", "E5", 8);
+    feesh.addNote("l", "F#5", 28);
+    feesh.addNote("l", "F#5", 8);
+    feesh.currentTime -= 64;
+    feesh.addNote("j", "F#4", 12);
+    // bpMotif();
+    feesh.currentTime += 54;
+    
+    feesh.addNote(";", "C#6", 8);
+    feesh.addNote(";", "C6", 8);
+    feesh.addNote("l", "B5", 4);
+    feesh.addNote("k", "A5", 8);
+    feesh.addNote("j", "F#5", 12);
 }
-
-for (let i = 0; i < 3; i++) {
-    bpAlternatingBeat();
-    bpAlternatingBeat2();
+if (song === "blast-processing") blastProcessing();
+else if (song === "wii-tanks") {
+    intro();
+    wiiTanks();
+    wiiTanks();
+    wiiTanks();
 }
-
-fisg.addNote("a", "F#1", 8); fisg.addNote("s", "F#1", 8);
-fisg.addNote("a", "F#1", 8); fisg.addNote("s", "F#1", 8);
-fisg.addNote("a", "G#1", 8); fisg.addNote("d", "G#2", 8);
-fisg.addNote("a", "G#1", 8); fisg.addNote("d", "G#2", 8);
-
-fisg.addNote("a", "D2", 8); fisg.addNote("f", "D3", 8);
-fisg.addNote("a", "D2", 8); fisg.addNote("f", "D3", 8);
-fisg.addNote("s", "E2", 8); fisg.addNote("f", "E3", 8);
-fisg.addNote("s", "E2", 16);
-
-bpSimpleBeat();
-bpSimpleBeat();
-bpRhythmicBeat();
-
-bpSimpleBeat();
-bpSimpleBeat();
-bpRhythmicBeat();
-
-fisg.addNote("f", "C#4", 8);
-fisg.addNote("f", "C4", 8);
-fisg.addNote("d", "B3", 4);
-fisg.addNote("s", "A3", 8);
-fisg.addNote("a", "F#3", 12);
-fisg.addNote("a", "F#1", 0); fisg.addNote("f", "F#2", 16);
-
-fisg.addNote("f", "C#4", 8);
-fisg.addNote("f", "C4", 8);
-fisg.addNote("d", "B3", 4);
-fisg.addNote("s", "A3", 8);
-fisg.addNote("a", "F#3", 12);
-
-feesh.currentTime = 554;
-feesh.addNote("k", "A4", 12); bpMotif();
-
-feesh.addNote("j", "F#4", 12); bpMotif();
-
-feesh.addNote("k", "A4", 12); bpMotif();
-
-feesh.addNote("j", "F#4", 0); feesh.addNote("l", "B4", 12); bpMotif();
-feesh.currentTime -= 32;
-feesh.addNote("l", "B4", 24); feesh.addNote(";", "D5", 8);
-
-feesh.addNote("k", "A4", 0); feesh.addNote("l", "C#5", 12); bpMotif();
-
-feesh.addNote("j", "F#4", 4); feesh.addNote("j", "F#4", 4); feesh.addNote("j", "F#4", 8);
-feesh.addNote("j", "F#4", 8); bpSubmotif();
-
-feesh.addNote("k", "A4", 12); bpMotif();
-
-feesh.addNote("j", "F#4", 0); feesh.addNote("l", "B4", 12); bpMotif();
-feesh.currentTime -= 40;
-feesh.addNote("l", "B4", 24); feesh.addNote(";", "E5", 16);
-
-feesh.addNote("j", "F#4", 8);
-feesh.addNote("j", "F#4", 12);
-feesh.addNote("j", "F#4", 4);
-feesh.addNote("j", "F#4", 8);
-feesh.addNote("l", "C#5", 12);
-feesh.addNote(";", "E5", 12);
-feesh.addNote("l", "C#5", 16);
-
-feesh.addNote("k", "A4", 12);
-feesh.addNote("k", "A4", 4);
-feesh.addNote("k", "A4", 8);
-feesh.addNote("k", "A4", 12);
-feesh.addNote("l", "C#5", 12);
-feesh.addNote("j", "F#4", 16);
-
-feesh.addNote("j", "F#4", 12);
-feesh.addNote("j", "F#4", 4);
-feesh.addNote("j", "F#4", 8);
-feesh.addNote("l", "C#5", 12);
-feesh.addNote(";", "E5", 12);
-feesh.addNote("l", "C#5", 16);
-
-feesh.addNote("j", "F#4", 12);
-feesh.addNote("j", "F#4", 4);
-feesh.addNote("j", "F#4", 8);
-feesh.addNote("l", "A4", 12);
-feesh.addNote(";", "C#5", 4);
-feesh.addNote("l", "A4", 4);
-feesh.addNote("k", "G#4", 4);
-feesh.addNote("j", "F#4", 16);
-
-feesh.addNote("j", "F#4", 12);
-feesh.addNote("j", "F#4", 4);
-feesh.addNote("k", "G#4", 4);
-feesh.addNote("l", "A4", 4);
-feesh.addNote("l", "C#5", 12);
-feesh.addNote(";", "E5", 12);
-feesh.addNote("l", "C#5", 16);
-
-feesh.addNote("j", "F#4", 12);
-feesh.addNote("j", "F#4", 4);
-feesh.addNote("k", "G#4", 4);
-feesh.addNote("l", "A4", 4);
-feesh.addNote("l", "A4", 12);
-feesh.addNote(";", "C#5", 12);
-feesh.addNote("l", "F#4", 16);
-
-feesh.addNote("l", "A4", 12);
-feesh.addNote("j", "F#4", 4);
-feesh.addNote("k", "G#4", 4);
-feesh.addNote("l", "A4", 4);
-feesh.addNote("l", "C#5", 12);
-feesh.addNote(";", "E5", 12);
-feesh.addNote("l", "C#5", 16);
-
-feesh.addNote("j", "F#4", 4);
-feesh.addNote("j", "F#4", 8);
-feesh.addNote("j", "F#4", 4);
-feesh.addNote("j", "F#4", 24);
-feesh.addNote("j", "E4", 0); feesh.addNote(";", "E5", 16);
-
-feesh.addNote("k", "A4", 0); feesh.addNote(";", "A5", 12);
-feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 12);
-feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 4);
-feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 4);
-feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 8);
-feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 8);
-feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 16);
-
-feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 12);
-feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 12);
-feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 4);
-feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 4);
-feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 8);
-feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 8);
-feesh.addNote("j", "F#4", 0); feesh.addNote("l", "F#5", 16);
-
-feesh.addNote("k", "A4", 12); bpMotif();
-
-feesh.addNote("j", "F#4", 12); bpMotif();
-feesh.currentTime -= 16;
-feesh.addNote(";", "F#5", 16);
-
-feesh.addNote("k", "A4", 0); feesh.addNote("l", "E5", 12);
-feesh.addNote(";", "F#5", 0); bpMotif();
-
-feesh.addNote("j", "F#4", 4);
-feesh.addNote("j", "F#4", 4);
-feesh.addNote("j", "F#4", 8);
-feesh.addNote("j", "F#4", 8);
-bpSubmotif();
-feesh.currentTime -= 8;
-feesh.addNote("j", "F#4", 8);
-
-feesh.addNote("k", "A4", 0); feesh.addNote("l", "A5", 12);
-feesh.addNote("k", "F#5", 0); bpMotif();
-feesh.currentTime -= 40;
-feesh.addNote(";", "C#6", 24);
-feesh.addNote(";", "B5", 8);
-feesh.addNote("l", "A5", 8);
-
-feesh.addNote(";", "B5", 8);
-feesh.addNote("l", "A5", 8);
-feesh.addNote("l", "F#5", 4);
-feesh.addNote("k", "E5", 8);
-feesh.addNote("l", "F#5", 28);
-feesh.addNote("l", "F#5", 8);
-feesh.currentTime -= 64;
-feesh.addNote("j", "F#4", 12);
-// bpMotif();
-feesh.currentTime += 54;
-
-feesh.addNote(";", "C#6", 8);
-feesh.addNote(";", "C6", 8);
-feesh.addNote("l", "B5", 4);
-feesh.addNote("k", "A5", 8);
-feesh.addNote("j", "F#5", 12);
-
-
-/*intro();
-wiiTanks();
-wiiTanks();
-wiiTanks();*/
 
 // sort the melodies numerically (so that, in case of a complicated sequence of loops, you don't have negative numbers screwing over the linear reading of the game)
 feesh.sortMelody();
 fisg.sortMelody();
-drums.times.sort((a, b) => a - b);
 
 async function main() {
-    if (audioAlwaysEnabled === false) {
-        window.removeEventListener("click", main);
-        document.getElementById("score").innerHTML = "50";
-    }
-
-    const backtrack = document.getElementById("backtrack");
+    window.removeEventListener("click", main);
+    document.getElementById("score").innerHTML = "50";
     
     await Tone.start();
 
