@@ -241,7 +241,7 @@ function main() {
     Object.keys(buttons).forEach(function(e) {
         buttons[e].newFrame();
         if (/*"asdf".includes(e) && */currentFrame > (2500 * slowdownMultiplier) && currentFrame % 20 == 10 && Math.random() < 0.5 - 0.5 * (0.9999 ** (currentFrame - 1000))) {
-            buttons[e].queueNote(101, /*["C4", "E4", "G4", "A4", "C5", "E5", "G5", "A5", "C6"]*/["E5", "F#5", "A5", "B5"][Math.floor(Math.random() * 4)]);
+            // buttons[e].queueNote(101, /*["C4", "E4", "G4", "A4", "C5", "E5", "G5", "A5", "C6"]*/["E5", "F#5", "A5", "B5"][Math.floor(Math.random() * 4)]);
         }
     });
 

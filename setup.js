@@ -3,6 +3,10 @@
 
 // make Incandescent Fish enemy
 
+// invisible notes??
+// notes that are slower/faster
+// perhaps notes that wave around sinusoidally?
+
 // extraordinarily effing cool idea: background goes dance floor core and changes color rhythmically
 
 class Fish {

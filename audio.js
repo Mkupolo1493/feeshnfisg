@@ -7,7 +7,7 @@ switch (song) {
         backtrack.src = "https://vgmsite.com/soundtracks/geometry-dash-android-ios-macos-windows-gamerip-2013/vojywrcrng/05.%20Blast%20Processing.mp3";
         break;
     case "wii-tanks":
-        backtrack.src = "https://epsilon.vgmsite.com/soundtracks/wii-play/hmcevebe/061%20-%20Tanks%20-%20Variation%206.mp3";
+        backtrack.src = "https://eta.vgmtreasurechest.com/soundtracks/wii-play/mzgzugjf/057%20-%20Tanks%20-%20Variation%203.mp3";
         break;
 }
 
@@ -136,7 +136,55 @@ function blastProcessing() {
     fisg.addNote("f", "C4", 8);
     fisg.addNote("d", "B3", 4);
     fisg.addNote("s", "A3", 8);
-    fisg.addNote("a", "F#3", 12);
+    fisg.addNote("a", "F#3", 28);
+    fisg.addNote("a", "F#3", 8);
+
+    fisg.addNote("a", "C#3", 8);
+    fisg.addNote("a", "C#3", 8);
+    fisg.addNote("a", "C#3", 4);
+    fisg.addNote("s", "E3", 4);
+    fisg.addNote("d", "E#3", 4);
+    fisg.addNote("d", "F#3", 28);
+    fisg.addNote("d", "F#3", 8);
+
+    fisg.addNote("f", "C#4", 8);
+    fisg.addNote("d", "C4", 8);
+    fisg.addNote("s", "B3", 4);
+    fisg.addNote("a", "A3", 8);
+    fisg.addNote("f", "B3", 12);
+    fisg.addNote("d", "A3", 8);
+    fisg.addNote("f", "B3", 8);
+
+    fisg.addNote("d", "A3", 8);
+    fisg.addNote("s", "F#3", 8);
+    fisg.addNote("s", "F#3", 4);
+    fisg.addNote("a", "E3", 8);
+    fisg.addNote("s", "F#3", 28);
+    fisg.addNote("s", "F#3", 8);
+
+    fisg.addNote("f", "C#4", 8);
+    fisg.addNote("f", "C4", 8);
+    fisg.addNote("d", "B3", 4);
+    fisg.addNote("s", "A3", 8);
+    fisg.addNote("a", "F#3", 28);
+    fisg.addNote("a", "F#3", 8);
+    
+    fisg.addNote("a", "C#3", 8);
+    fisg.addNote("a", "C#3", 8);
+    fisg.addNote("a", "C#3", 4);
+    fisg.addNote("s", "E3", 4);
+    fisg.addNote("d", "E#3", 4);
+    fisg.addNote("d", "F#3", 28);
+    fisg.addNote("d", "F#3", 8);
+
+    fisg.addNote("f", "C#4", 8);
+    fisg.addNote("d", "C4", 8);
+    fisg.addNote("s", "B3", 4);
+    fisg.addNote("a", "A3", 8);
+    fisg.addNote("f", "B3", 12);
+    fisg.addNote("d", "A3", 8);
+    fisg.addNote("f", "B3", 8);
+    
     
     feesh.currentTime = 554;
     feesh.addNote("k", "A4", 12); bpMotif();
