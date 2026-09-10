@@ -1,4 +1,4 @@
-const song = "blast-processing";
+const song = "wii-tanks";
 
 const backtrack = document.createElement("audio");
 backtrack.preload = "auto";
@@ -7,7 +7,7 @@ switch (song) {
         backtrack.src = "https://vgmsite.com/soundtracks/geometry-dash-android-ios-macos-windows-gamerip-2013/vojywrcrng/05.%20Blast%20Processing.mp3";
         break;
     case "wii-tanks":
-        backtrack.src = "https://eta.vgmtreasurechest.com/soundtracks/wii-play/mzgzugjf/057%20-%20Tanks%20-%20Variation%203.mp3";
+        backtrack.src = "./wiitanks.mp3";
         break;
 }
 

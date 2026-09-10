@@ -1,4 +1,4 @@
-const noteSpeed = 4; // how fast the notes move up the screen (3 = 3vh per frame)
+const noteSpeed = 4.4; // how fast the notes move up the screen (3 = 3vh per frame)
 let slowdownMultiplier = 1;
 if (song === "blast-processing") {
     slowdownMultiplier = 1.39; // Blast Processing
